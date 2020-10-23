@@ -25,7 +25,9 @@ int main(int argv, char *argc[]){
         strcat(str, argc[i]);
         strcat(str, " ");
     }
-
+//std::string empath="export PATH=\"$PATH:`pwd`\"";
+// export PATH="$PATH:`pwd`"
+//system(empath.c_str());
 system(str);
 //memset(user_cmd2,'-',6000);
 return 0;
