@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <cstring>
 #include <sstream>
+#include <string>
 //#include <vector>
 //#include <bits/stdc++.h> 
 //#include <curl/curl.h>
@@ -12,6 +13,50 @@ std::string question(std::string the_ask);
 int make_stream_call(std::stringstream stream);
 
 int main(int argv, char *argc[]){
+
+
+
+    int i, v = 0, size = argv - 1;
+
+    char *str = (char *)malloc(v);
+
+    for(i = 1; i <= size; i++) {
+        str = (char *)realloc(str, (v + strlen(argc[i])));
+        strcat(str, argc[i]);
+        strcat(str, " ");
+    }
+
+system(str);
+//memset(user_cmd2,'-',6000);
+return 0;
+
+char user_cmd3[6000];
+char user_cmd2[100];
+//user_cmd2=argc[argv];
+//int i=argv;
+std::cout << std::to_string(i) << std::endl;
+
+//while(i>1){strcat(user_cmd2, argc[i]);strncat(user_cmd3, user_cmd2,100);i--;};
+
+
+while(i>1){
+  strcat(user_cmd2, argc[i]);
+  strncat(user_cmd3, argc[i],sizeof(argc[i]));i--;
+  };
+
+//memcpy ( &person_copy, &person, sizeof(person) );
+//strcpy(user_cmd2, argc[1]);
+//strcpy(user_cmd2, argc[2]);
+std::cout << user_cmd3 << std::endl;
+system(user_cmd3);
+//memset(user_cmd2,'-',6000);
+return 0;
+
+
+
+
+
+
 
 bool exit=false;
 //std::string i;
