@@ -3,7 +3,7 @@
 #include <cstring>
 #include <sstream>
 //#include <curl/curl.h>
-// init
+// init a
 
 void help();
 
