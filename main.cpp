@@ -2,52 +2,90 @@
 #include <stdlib.h>
 #include <cstring>
 #include <sstream>
+//#include <vector>
+//#include <bits/stdc++.h> 
 //#include <curl/curl.h>
 // init a
 
 void help();
-
 std::string question(std::string the_ask);
-
-void make_stream_call(std::string the_stream);
+int make_stream_call(std::stringstream stream);
 
 int main(int argv, char *argc[]){
 
 bool exit=false;
-std::string i;
-std::string r;
+//std::string i;
+//std::string r;
 std::string user_cmd;
-char cmd[100];
-int cycle=4;
+//char cmd[100];
+//int cycle=4;
 while(exit==false)
 {
-make_stream_call("ls -pla");
+  //std::vector <std::string> tokens; 
+  //tokens.push_back("ls -pla");
+//make_stream_call(tokens);
+//i="";
+//int done=0;
+//std::stringstream user_cmd;
+//std::string cmd;
+
 std::cout << "input your cmd:" << std::endl;
-std::cin >> user_cmd;
+char user_cmd[6000];
+std::cin.getline(user_cmd,6000);
+system(user_cmd);
+memset(user_cmd,'-',6000);
+//puts(user_cmd);
+//while(done==0){std::cin >> cmd; done=make_stream_call(user_cmd);}
+//cycle=2;
+//while(cycle>1){cycle--;getline(cmd, i, ' '){};user_cmd << cmd;}
 
-make_stream_call(""+user_cmd+"");
+ // std::cout << "Please, enter your name: ";
+  
+//std::cout << i << std::endl;
+//i=user_cmd.str().c_str();
 
-  std::cout << "input: help or exit" << std::endl;
-std::cin >> r;
-cycle=4;
-while(cycle>1){cycle--;std::cout << "cycle:" + std::to_string(cycle) << std::endl;}
+//done=make_stream_call(user_cmd);
+ //std::stringstream ww(user_cmd); 
 
-  char str[6000];
-  memset (str,'-',6000);
-  puts (str);
-std::cout << "memset complete" << std::endl;
+ //std::vector <std::string> tokens; 
+ //std::string intermediate;      
+     // while(getline(user_cmd, intermediate, ' ')){ 
+   //           while(getline(ww, intermediate, ' ')){ 
+     //   tokens.push_back(intermediate); 
+    //}; 
+      
+//std::string s;
+//for (const auto &piece : v) s += piece;
+//return s;
+ // std::vector <std::string> tokens2; 
+ // tokens2.push_back(user_cmd);
+
+ // user_cmd=tokens;
+//make_stream_call(tokens2);
+
+
+
+ // std::cout << "input: help or exit" << std::endl;
+//std::cin >> r;
+//cycle=4;
+//while(cycle>1){cycle--;std::cout << "cycle:" + //std::to_string(cycle) << std::endl;}
+
+  //char str[6000];
+  //memset (str,'-',6000);
+  //puts (str);
+//std::cout << "memset complete" << std::endl;
 
 //help();
-if(r=="exit"){return 0;}
-if(r=="help"){help();}
+//if(r=="exit"){return 0;}
+//if(r=="help"){help();}
 //r=r+"; sleep 4";
 //std::cout << "r"+r << std::endl;
 //cmd=r.c_str()
 //i=system();
 //std::cout << "The value returned was:" + i << std::endl;
 //printf ("The value returned was: %c.\n",i);
-question("hy");
-question("why");
+//question("hy");
+//question("why");
 
 }
 
@@ -74,13 +112,23 @@ else {
 }
 
 
-void make_stream_call(std::string the_stream){
-std::stringstream stream;
-
-stream << the_stream;
+int make_stream_call(std::stringstream stream){
+//std::vector <std::string> tokens; 
+//std::string s;
+//std::stringstream s;
+/*
+std::string const_iterator; 
+for (std::vector<std::string>::const_iterator i = tokens.begin(); i != tokens.end(); ++i)
+    {s += *i;};
+*/
+//for (auto const& sr : the_stream) { s << sr;  }
+//for (const auto &piece : the_stream) {s += piece;}
+//cycle=4;
+//while(cycle>1){cycle--;std::cout << "cycle:" + //std::to_string(cycle) << std::endl;}
+ 
+//system(the_stream.str().c_str());
+//std::stringstream stream;
+//s << stream;
 system(stream.str().c_str());
-
-
-
-
+return 1;
 }
