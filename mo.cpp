@@ -179,9 +179,12 @@ cout << search_string[iterator];
 if(search_string[_iterator] == ' ' || search_string[_iterator] == '\n'){
 //cout << "_processed space";
 //_processed+=_token;
-if(search_string[_iterator] == ' '){
-if(target_token == _token || on_token_line){_processed+=_token;_processed+=' '; on_token_line=true;}
+
+if(target_token == _token || on_token_line){
+_processed+=_token;_processed+=' ';
+on_token_line=true;
 }
+
 if(on_token_line){
 if(search_string[_iterator] == '\n'){
 cout << endl << _processed << endl;
@@ -192,6 +195,8 @@ return 0;}
 _token="";
 }
 if(search_string[_iterator] != ' ' && search_string[_iterator] != '\n'){
+//if(search_string[_iterator] != '@' ){_token+=search_string[_iterator];}
+//if(search_string[_iterator] == '@' ){_token+=' ';}
 _token+=search_string[_iterator];
 }
 _iterator++;
@@ -200,6 +205,14 @@ _iterator++;
 
 //cout << endl << _processed << endl;
 
+// for converting @ to ' '
+/*
+if(search_string[_iterator] != ' ' && search_string[_iterator] != '\n'){
+//if(search_string[_iterator] != '@' ){_token+=search_string[_iterator];}
+//if(search_string[_iterator] == '@' ){_token+=' ';}
+_token+=search_string[_iterator];
+}
+*/
 
 return 0;
 }
