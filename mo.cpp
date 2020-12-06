@@ -8,11 +8,11 @@
 using namespace std;
 
 
-string get_date(){
+string get_dtg(){
 // c++ equalivent to:  DTG=$(date | tr ': ' '_')
 time_t now = time(0);
 char* cdate = ctime(&now);
-char _no_spaces_date[20];
+char _no_spaces_date[24];
 string date=string(cdate);
 string no_spaces_date;
 int _iterator=0;
@@ -27,12 +27,14 @@ _iterator++;
 }
 no_spaces_date=string(_no_spaces_date);
 return no_spaces_date;
-}
+} //string get_dtg(){
+
+
 
 int main(int argv, char *argc[]){
 
 
-string current_dtg=get_date();
+string current_dtg=get_dtg();
 cout << current_dtg;
 
 return 0;
@@ -79,14 +81,7 @@ to_file.close();
 system("cat regen");
 
 
-const char* cstring_file = file_string.c_str();
-const char* ifs = ",";
-const char* line_separator = "\n";
-int iterator=0;
-const char* char_iterator;
-char* line;
-char* token;
-string processed;
+
 
 
 
@@ -119,6 +114,20 @@ std::cout<<"word 'sun' found"<<std::endl;
 if(kvstore.find("mars") == kvstore.end())
 std::cout<<"word 'mars' not found"<<std::endl;
 */
+
+
+
+
+
+const char* cstring_file = file_string.c_str();
+const char* ifs = ",";
+const char* line_separator = "\n";
+int iterator=0;
+const char* char_iterator;
+char* line;
+char* token;
+string processed;
+
 
 
 
