@@ -3,13 +3,48 @@
 #include <cstring>
 #include <fstream>
 #include <iterator>
+#include <ctime>
+#include <map>
 using namespace std;
 
+
+string get_date(){
+// c++ equalivent to:  DTG=$(date | tr ': ' '_')
+time_t now = time(0);
+char* cdate = ctime(&now);
+char _no_spaces_date[20];
+string date=string(cdate);
+string no_spaces_date;
+int _iterator=0;
+while(_iterator < sizeof(date)){
+if(date[_iterator] != ' ' && date[_iterator] != ':'){_no_spaces_date[_iterator]=date[_iterator];}
+if(date[_iterator] == ' ' || date[_iterator] == ':'){_no_spaces_date[_iterator]='_';}
+//cout << endl;
+//cout << date[_iterator];
+//cout << endl;
+//cout << _no_spaces_date;
+_iterator++;
+}
+no_spaces_date=string(_no_spaces_date);
+return no_spaces_date;
+}
+
 int main(int argv, char *argc[]){
+
+
+string current_dtg=get_date();
+cout << current_dtg;
+
+return 0;
+
+
+
 
 //std::string rd = "#!/bin/bash\n mkdir -p /media/rd; mount -t ramfs -o size=256M ramfs /media/rd";
 const char* cmd;
 std::string rd = "mkdir -p /media/rd; mount -t ramfs -o size=256M ramfs /media/rd";
+
+
 
 
 // make file 
@@ -48,13 +83,13 @@ const char* cstring_file = file_string.c_str();
 const char* ifs = ",";
 const char* line_separator = "\n";
 int iterator=0;
-char* char_iterator;
+const char* char_iterator;
 char* line;
 char* token;
 string processed;
 
 
-map<string,string> kvstore;
+
 
 /*
 map reference
@@ -91,11 +126,13 @@ bool in_token=true;
 bool column_header_mode=false;
 //bool on_header=true;
 
+map<string, string> kvstore;
+
 while(cstring_file[iterator] != EOF){
-char_iterator=cstring_file[iterator];
+char_iterator=&cstring_file[iterator];
 if(char_iterator == line_separator){
 
-line="";
+line=0;
 }
 
 
@@ -117,8 +154,8 @@ if(in_token){
 
 }
 
-if(){}
-if(){}
+//if(){}
+//if(){}
 
 iterator++;
 }
