@@ -33,7 +33,90 @@ return no_spaces_date;
 
 */
 
+
+// searches a string datafile in the format:
+// map_name key:value key:value
+// map_name key:value key:value
+// where the ifs is \t
+string get_map_or_key_value(string target_token,string search_string, string key){
+int _iterator=0;
+const char* _char_iterator;
+string _token;
+string _processed;
+bool on_token_line=false;
+bool processing_key_value=false;
+while(_iterator < search_string.length()){
+if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+if(target_token == _token || on_token_line || processing_key_value){
+if(key != "" && processing_key_value){
+_processed+=_token;
+ofstream to_file;
+to_file.open ("result");
+to_file << _processed;
+to_file.close();
+return _processed;
+} // if(key != "" && processing_key_value){
+if(key == ""){_processed+=_token;_processed+='\t';}
+on_token_line=true;
+} // if(target_token == _token || on_token_line || processing_key_value){
+if(on_token_line){
+if(search_string[_iterator] == '\n'){
+// write result to file
+ofstream to_file;
+to_file.open ("result");
+to_file << _processed;
+to_file.close();
+return _processed;}
+}
+_token="";
+}
+if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
+_token+=search_string[_iterator];
+if(key != ""){
+if(on_token_line){
+if(_token == key && search_string[_iterator+1] == ':'){processing_key_value=true;_token="";}
+if(search_string[_iterator] == ':'){_token="";}
+} // if(on_token_line){
+} // if(key != ""){
+} // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
+_iterator++;
+} // while(iterator < search_string.length()){
+return _processed;
+} // string get_map_or_key_value(string target_token,string search_string, string key){
+
 int main(int argv, char *argc[]){
+if(!argc[1]){cout << "missing target map!" << endl; return 0;}
+if(!argc[2]){cout << "missing target datafile!" << endl; return 0;}
+string target_token=argc[1];
+ifstream target_file(argc[2]);
+string search_string(istreambuf_iterator<char>{target_file}, {});
+string key="";
+if(argc[3]){key=argc[3];}
+cout << endl;
+cout << "target_token: " << target_token << endl;
+cout << "target_file:  " << argc[2] << endl;
+cout << "target_key:   " << key << endl;
+
+string search_result;
+search_result=get_map_or_key_value(target_token,search_string,key);
+cout << search_result << endl;
+cout << "result also written to the file: result" << endl;
+
+
+return 0;
+
+
+// time ./mdb VERSION_CONTROL datafile 
+// time grep  VERSION_CONTROL datafile > result; cat result
+
+// time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'} > result; cat result
+// time ./mdb VERSION_CONTROL datafile VERSION
+
+
+// clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
+
+
+
 
 /*
 string current_dtg=get_dtg();
@@ -168,17 +251,13 @@ cout << endl << "----------------------------------------" << endl;
 // search for first token in string from file
 //string target_token="VERSION_CONTROL";
 //ifstream target_file("datafile");
-if(!argc[1]){cout << "missing target map!" << endl; return 0;}
-if(!argc[2]){cout << "missing target datafile!" << endl; return 0;}
-string target_token=argc[1];
-ifstream target_file(argc[2]);
-string key="";
-if(argc[3]){key=argc[3];}
-string search_string(istreambuf_iterator<char>{target_file}, {});
 
-cout << "target_token: " << target_token << endl;
-cout << "target_file:  " << argc[2] << endl;
-cout << "target_key:   " << key << endl;
+//if(!argc[2]){cout << "missing target datafile!" << endl; return 0;}
+
+//ifstream target_file(argc[2]);
+
+//string search_string(istreambuf_iterator<char>{target_file}, {});
+
 
 int _iterator=0;
 const char* _char_iterator;
@@ -261,7 +340,7 @@ _token+=search_string[_iterator];
 }
 */
 
-// time ./mdb VERSION_CONTROL datafile
+// time ./mdb VERSION_CONTROL datafile 
 // time grep  VERSION_CONTROL datafile
 
 // time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'}
