@@ -9,6 +9,10 @@
 using namespace std;
 // MAGIC BOOLS
 const bool output_to_file=false;
+// META
+const string version="001"; 
+const string author="Michael N. Hartman"; 
+const string modification_date="Sun_Dec__6_21_37_51_2020"; 
 
 
 // c++ equalivent to:  DTG=$(date | tr ': ' '_')
@@ -160,19 +164,22 @@ cout << mode << ": " << mode << endl;
 if(mode == "get_map_or_key_value"){cout << "key:     " << key << endl;}
 if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:     " << key << endl;}
 
+if(mode == "get_map_or_key_value"){
 string search_result;
 search_result=get_map_or_key_value(target_token,search_string,key);
 cout << search_result << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
+}
 
 string current_dtg=get_dtg();
 cout << current_dtg;
 
+if(mode == "set_or_add_key_value_pair"){
 string modify;
 modify=set_or_add_key_value_pair(target_token,search_string,key);
 cout << modify << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
-
+}
 return 0;
 
 
