@@ -115,119 +115,38 @@ if(kvstore.find("mars") == kvstore.end())
 std::cout<<"word 'mars' not found"<<std::endl;
 */
 
-
-
-ifstream _the_file("datafile");
-string _file_string(istreambuf_iterator<char>{_the_file}, {});
-
-// file_string
-
-
-// file_string
-
-//const char* cstring_file = _file_string.c_str();
-
-//int the_size=sizeof(_cstring_file);
-//const char* cstring_file[the_size] = _cstring_file;
-//char* ifs = "\t";
-//char* line_separator = "\n";
-int iterator=0;
-const char* char_iterator;
-
-//char line[500];
-//char token[100];
-//string line;
-string token;
-//char processed[10000];
-string processed;
-
-
-//bool in_token=true;
-//bool column_header_mode=false;
-//bool on_header=true;
-
-//map<string, string> kvstore;
-//vector<string>
-
-/*
-time_t now = time(0);
-char* cdate = ctime(&now);
-char _no_spaces_date[24];
-string date=string(cdate);
-string no_spaces_date;
-int _iterator=0;
-while(_iterator < sizeof(date)){
-if(date[_iterator] != ' ' && date[_iterator] != ':'){_no_spaces_date[_iterator]=date[_iterator];}
-if(date[_iterator] == ' ' || date[_iterator] == ':'){_no_spaces_date[_iterator]='_';}
-//cout << endl;
-//cout << date[_iterator];
-//cout << endl;
-//cout << _no_spaces_date;
-_iterator++;
-}
-no_spaces_date=string(_no_spaces_date);
-return no_spaces_date;
-*/
-string cstring_file = _file_string;
-cout << endl << cstring_file;
-
 //for_each(_file_string.begin(), _file_string.end(), fn);
 
+
+
+// iterate thru string and recreate it
+ifstream _the_file("datafile");
+string _file_string(istreambuf_iterator<char>{_the_file}, {});
+int iterator=0;
+const char* char_iterator;
+string token;
+string processed;
+string cstring_file = _file_string;
+//cout << endl << cstring_file;
 while(iterator < cstring_file.length()){
-//char_iterator=cstring_file[iterator];
-cout << endl;
-cout << cstring_file[iterator];
-
-if(cstring_file[iterator] == '\n' && token == ""){
-
-//line="";
-processed+='\n';
-cout << "processed newline";
-}
-
-
+//cout << endl;
+//cout << cstring_file[iterator];
+if(cstring_file[iterator] == '\n' && token == ""){processed+='\n';}
 
 if(cstring_file[iterator] == ' ' || (cstring_file[iterator] == '\n' && token != "")){
-cout << "processed space";
-
+//cout << "processed space";
 processed+=token;
 if(cstring_file[iterator] == '\n' && token != ""){processed+='\n';}
 if(cstring_file[iterator] == ' '){processed+=' ';}
-cout << "processed" << processed << endl;
-cout << "token" << token << endl;
+//cout << "processed" << processed << endl;
+//cout << "token" << token << endl;
 token="";
-
 }
-
-/*
-//if(cstring_file[iterator] == 't' && cstring_file[iterator-1] == '\\'){
-if(cstring_file[iterator] == ' '){
-//if(column_header_mode){kvstore.insert(make_pair("earth",token));}
-cout << "inside space";
-//kvstore.insert(make_pair("earth",token));
-cout << "processed space";
-processed+=token;
-processed+=' ';
-token=nullptr;
-cout << endl;
-//cout << token;
-//cout << "processed space";
-}
-*/
-
 if(cstring_file[iterator] != ' ' && cstring_file[iterator] != '\n'){
-//if(in_token){
-
 token+=cstring_file[iterator];
-//}
-
 }
-
-//if(){}
-//if(){}
 iterator++;
-}
-
+} // while(iterator < cstring_file.length()){
 
 
 cout << endl << processed;
@@ -237,6 +156,50 @@ to_file.open ("processed");
 to_file << processed;
 to_file.close();
 system("cat processed");
+
+
+
+cout << endl << "----------------------------------------" << endl;
+
+
+// search for first token in string from file
+string target_token="VERSION_CONTROL";
+ifstream target_file("datafile");
+string search_string(istreambuf_iterator<char>{target_file}, {});
+int _iterator=0;
+const char* _char_iterator;
+string _token;
+string _processed;
+bool on_token_line=false;
+while(_iterator < search_string.length()){
+//cout << endl;
+cout << search_string[iterator];
+//if(search_string[_iterator] == '\n' && _token == ""){_processed+='\n';}
+
+if(search_string[_iterator] == ' ' || search_string[_iterator] == '\n'){
+//cout << "_processed space";
+//_processed+=_token;
+if(search_string[_iterator] == ' '){
+if(target_token == _token || on_token_line){_processed+=_token;_processed+=' '; on_token_line=true;}
+}
+if(on_token_line){
+if(search_string[_iterator] == '\n'){
+cout << endl << _processed << endl;
+return 0;}
+}
+//cout << "_processed" << _processed << endl;
+//cout << "_token" << _token << endl;
+_token="";
+}
+if(search_string[_iterator] != ' ' && search_string[_iterator] != '\n'){
+_token+=search_string[_iterator];
+}
+_iterator++;
+} // while(iterator < search_string.length()){
+
+
+//cout << endl << _processed << endl;
+
 
 return 0;
 }
