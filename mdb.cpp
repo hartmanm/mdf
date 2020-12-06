@@ -1,17 +1,18 @@
 #include <iostream>
 #include <string>
-//#include <cstring>
 #include <fstream>
 #include <iterator>
-//#include <ctime>
+#include <ctime>
+//#include <cstring>
 //#include <map>
 //#include <algorithm>
 using namespace std;
+// MAGIC BOOLS
+const bool output_to_file=false;
 
-/*
 
-string get_dtg(){
 // c++ equalivent to:  DTG=$(date | tr ': ' '_')
+string get_dtg(){
 time_t now = time(0);
 char* cdate = ctime(&now);
 char _no_spaces_date[24];
@@ -21,17 +22,11 @@ int _iterator=0;
 while(_iterator < sizeof(date)){
 if(date[_iterator] != ' ' && date[_iterator] != ':'){_no_spaces_date[_iterator]=date[_iterator];}
 if(date[_iterator] == ' ' || date[_iterator] == ':'){_no_spaces_date[_iterator]='_';}
-//cout << endl;
-//cout << date[_iterator];
-//cout << endl;
-//cout << _no_spaces_date;
 _iterator++;
 }
 no_spaces_date=string(_no_spaces_date);
 return no_spaces_date;
 } //string get_dtg(){
-
-*/
 
 
 // searches a string datafile in the format:
@@ -50,10 +45,13 @@ if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 if(target_token == _token || on_token_line || processing_key_value){
 if(key != "" && processing_key_value){
 _processed+=_token;
+if(output_to_file){
+// write result to file
 ofstream to_file;
 to_file.open ("result");
 to_file << _processed;
 to_file.close();
+}
 return _processed;
 } // if(key != "" && processing_key_value){
 if(key == ""){_processed+=_token;_processed+='\t';}
@@ -61,11 +59,13 @@ on_token_line=true;
 } // if(target_token == _token || on_token_line || processing_key_value){
 if(on_token_line){
 if(search_string[_iterator] == '\n'){
+if(output_to_file){
 // write result to file
 ofstream to_file;
 to_file.open ("result");
 to_file << _processed;
 to_file.close();
+}
 return _processed;}
 }
 _token="";
@@ -84,6 +84,65 @@ _iterator++;
 return _processed;
 } // string get_map_or_key_value(string target_token,string search_string, string key){
 
+
+// sets a keys value to adds a key value pair to a given map
+// searches a string datafile in the format:
+// map_name key:value key:value
+// map_name key:value key:value
+// where the ifs is \t
+string set_or_add_key_value_pair(string target_token,string search_string, string key){
+int _iterator=0;
+const char* _char_iterator;
+string _token;
+string _processed;
+bool on_token_line=false;
+bool processing_key_value=false;
+while(_iterator < search_string.length()){
+if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+if(target_token == _token || on_token_line || processing_key_value){
+if(key != "" && processing_key_value){
+_processed+=_token;
+if(output_to_file){
+// write result to file
+ofstream to_file;
+to_file.open ("result");
+to_file << _processed;
+to_file.close();
+}
+return _processed;
+} // if(key != "" && processing_key_value){
+if(key == ""){_processed+=_token;_processed+='\t';}
+on_token_line=true;
+} // if(target_token == _token || on_token_line || processing_key_value){
+if(on_token_line){
+if(search_string[_iterator] == '\n'){
+if(output_to_file){
+// write result to file
+ofstream to_file;
+to_file.open ("result");
+to_file << _processed;
+to_file.close();
+}
+return _processed;}
+}
+_token="";
+}
+if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
+_token+=search_string[_iterator];
+if(key != ""){
+if(on_token_line){
+if(_token == key && search_string[_iterator+1] == ':'){processing_key_value=true;_token="";}
+if(search_string[_iterator] == ':'){_token="";}
+} // if(on_token_line){
+} // if(key != ""){
+} // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
+_iterator++;
+} // while(iterator < search_string.length()){
+return _processed;
+} // string set_or_add_key_value_pair(string target_token,string search_string, string key_value_pair){
+
+
+
 int main(int argv, char *argc[]){
 if(!argc[1]){cout << "missing target map!" << endl; return 0;}
 if(!argc[2]){cout << "missing target datafile!" << endl; return 0;}
@@ -91,23 +150,36 @@ string target_token=argc[1];
 ifstream target_file(argc[2]);
 string search_string(istreambuf_iterator<char>{target_file}, {});
 string key="";
-if(argc[3]){key=argc[3];}
+string mode;
+if(argc[3][0] != '-' && argc[3]){key=argc[3];mode="get_map_or_key_value";}
+if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
 cout << endl;
-cout << "target_token: " << target_token << endl;
-cout << "target_file:  " << argc[2] << endl;
-cout << "target_key:   " << key << endl;
+cout << "target_token:   " << target_token << endl;
+cout << "target_file:    " << argc[2] << endl;
+cout << mode << ": " << mode << endl;
+if(mode == "get_map_or_key_value"){cout << "key:     " << key << endl;}
+if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:     " << key << endl;}
 
 string search_result;
 search_result=get_map_or_key_value(target_token,search_string,key);
 cout << search_result << endl;
-cout << "result also written to the file: result" << endl;
+if(output_to_file){cout << "result also written to the file: result" << endl;}
 
+string current_dtg=get_dtg();
+cout << current_dtg;
+
+string modify;
+modify=set_or_add_key_value_pair(target_token,search_string,key);
+cout << modify << endl;
+if(output_to_file){cout << "result also written to the file: result" << endl;}
 
 return 0;
 
 
 // time ./mdb VERSION_CONTROL datafile 
-// time grep  VERSION_CONTROL datafile > result; cat result
+// time grep  VERSION_CONTROL datafile 
+
+// time grep  VERSION_CONTROL datafile  > result; cat result
 
 // time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'} > result; cat result
 // time ./mdb VERSION_CONTROL datafile VERSION
