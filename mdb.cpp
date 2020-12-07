@@ -89,6 +89,8 @@ return _processed;
 } // string get_map_or_key_value(string target_token,string search_string, string key){
 
 
+
+/// TODO
 // sets a keys value to adds a key value pair to a given map
 // searches a string datafile in the format:
 // map_name key:value key:value
@@ -144,7 +146,7 @@ _iterator++;
 } // while(iterator < search_string.length()){
 return _processed;
 } // string set_or_add_key_value_pair(string target_token,string search_string, string key_value_pair){
-
+/// TODO
 
 
 int main(int argv, char *argc[]){
@@ -154,15 +156,18 @@ string target_token=argc[1];
 ifstream target_file(argc[2]);
 string search_string(istreambuf_iterator<char>{target_file}, {});
 string key="";
-string mode;
-if(argc[3][0] != '-' && argc[3]){key=argc[3];mode="get_map_or_key_value";}
+string mode="";
+if(!argc[3]){mode="get_map_or_key_value";}
+if(argc[3]){
+if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
+}
 cout << endl;
-cout << "target_token:   " << target_token << endl;
-cout << "target_file:    " << argc[2] << endl;
+cout << "target_token:         " << target_token << endl;
+cout << "target_file:          " << argc[2] << endl;
 cout << mode << ": " << mode << endl;
-if(mode == "get_map_or_key_value"){cout << "key:     " << key << endl;}
-if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:     " << key << endl;}
+if(mode == "get_map_or_key_value"){cout << "key:                  " << key << endl;}
+if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:         " << key << endl;}
 
 if(mode == "get_map_or_key_value"){
 string search_result;
