@@ -89,6 +89,33 @@ return _processed;
 } // string get_map_or_key_value(string target_token,string search_string, string key){
 
 
+string alt_find(string target_token,string search_string, string key){
+std::size_t found = 0;
+found = target_token.find(search_string);
+cout << found << endl;
+int iterator=found;
+if(found==0){return "-1";}
+string _processed;
+bool append=false;
+while(iterator < search_string.length()){
+if(append==true){ 
+if(search_string[iterator] == '\t' || search_string[iterator] == '\n')
+{
+// write result to file
+ofstream to_file;
+to_file.open ("result");
+to_file << _processed;
+to_file.close();
+return _processed;  
+} // if(search_string[iterator] == '\t' || search_string[iterator] == '\n')
+if(search_string[iterator] != '\t'){_processed+=search_string[iterator];}
+} // if(append==true){ 
+if(search_string[iterator] == ':'){append=true;}
+iterator++;
+} // while(iterator < search_string.length()){
+return "-2";
+} // string alt_find(string target_token,string search_string, string key){
+
 
 /// TODO
 // sets a keys value to adds a key value pair to a given map
@@ -96,7 +123,7 @@ return _processed;
 // map_name key:value key:value
 // map_name key:value key:value
 // where the ifs is \t
-string set_or_add_key_value_pair(string target_token,string search_string, string key){
+string set_or_add_key_value_pair(string target_token,string search_string, string key, string value){
 int _iterator=0;
 const char* _char_iterator;
 string _token;
@@ -108,6 +135,11 @@ if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 if(target_token == _token || on_token_line || processing_key_value){
 if(key != "" && processing_key_value){
 _processed+=_token;
+
+
+
+//str.replace(str.find(key),str2.length(),"preposition");
+
 if(output_to_file){
 // write result to file
 ofstream to_file;
@@ -157,11 +189,13 @@ ifstream target_file(argc[2]);
 string search_string(istreambuf_iterator<char>{target_file}, {});
 string key="";
 string mode="";
+string value="None";
 if(!argc[3]){mode="get_map_or_key_value";}
 if(argc[3]){
 if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
 }
+if(argc[4]){value=argc[4];}
 cout << endl;
 cout << "target_token:         " << target_token << endl;
 cout << "target_file:          " << argc[2] << endl;
@@ -171,7 +205,8 @@ if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:         " << ke
 
 if(mode == "get_map_or_key_value"){
 string search_result;
-search_result=get_map_or_key_value(target_token,search_string,key);
+//search_result=get_map_or_key_value(target_token,search_string,key);
+search_result=alt_find(target_token,search_string,key);
 cout << search_result << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
 }
@@ -181,7 +216,7 @@ cout << current_dtg;
 
 if(mode == "set_or_add_key_value_pair"){
 string modify;
-modify=set_or_add_key_value_pair(target_token,search_string,key);
+modify=set_or_add_key_value_pair(target_token,search_string,key,value);
 cout << modify << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
 }
