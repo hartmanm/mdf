@@ -130,28 +130,37 @@ string _token;
 string _processed;
 bool on_token_line=false;
 bool processing_key_value=false;
+bool processing_value=false;
+bool processing_end_cap=false;
+bool added_value=false;
+string old_value="";
 while(_iterator < search_string.length()){
 if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 if(target_token == _token || on_token_line || processing_key_value){
-if(key != "" && processing_key_value){
-_processed+=_token;
+//if(key != "" && processing_key_value){
+//_processed+=_token;
 
 
 
 //str.replace(str.find(key),str2.length(),"preposition");
 
-if(output_to_file){
+//if(output_to_file){
 // write result to file
-ofstream to_file;
-to_file.open ("result");
-to_file << _processed;
-to_file.close();
-}
-return _processed;
-} // if(key != "" && processing_key_value){
+//ofstream to_file;
+//to_file.open ("result");
+//to_file << _processed;
+//to_file.close();
+//}
+//return _processed;
+//} // if(key != "" && processing_key_value){
+
+
+
 if(key == ""){_processed+=_token;_processed+='\t';}
 on_token_line=true;
 } // if(target_token == _token || on_token_line || processing_key_value){
+
+
 if(on_token_line){
 if(search_string[_iterator] == '\n'){
 if(output_to_file){
@@ -162,15 +171,74 @@ to_file << _processed;
 to_file.close();
 }
 return _processed;}
-}
+} // if(on_token_line){
+
 _token="";
-}
+} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
 _token+=search_string[_iterator];
 if(key != ""){
+string line="";
+line+=target_token;
 if(on_token_line){
-if(_token == key && search_string[_iterator+1] == ':'){processing_key_value=true;_token="";}
-if(search_string[_iterator] == ':'){_token="";}
+
+line+= search_string[_iterator];
+cout << line << endl;
+if(_token == key && search_string[_iterator+1] == ':'){processing_key_value=true;_token="";
+
+cout << "inside :+1" << endl;
+}
+if(search_string[_iterator] == ':'){
+_token="";
+
+cout << "inside :" << endl;
+
+int kv_iterator=_iterator;
+while(kv_iterator < search_string.length()){
+if(search_string[kv_iterator] != '\t' && search_string[kv_iterator] != ':'){
+_token+=search_string[kv_iterator];
+}
+kv_iterator++;
+
+cout << _token << endl;
+if(search_string[kv_iterator] == '\t' || search_string[kv_iterator] == '\n'){
+
+//if(_token.length() < 1){}
+
+line+=value;
+added_value=true;
+}
+
+if(added_value){
+if(search_string[kv_iterator] == '\t' || search_string[kv_iterator] == '\n'){
+
+//if(_token.length() < 1){}
+
+line+=value;
+processing_end_cap=true;
+old_value=_token;
+_token="";
+line+='\t';
+}
+if(processing_end_cap){
+while(kv_iterator < search_string.length()){
+
+_token+=search_string[kv_iterator];
+kv_iterator++;
+} // while(kv_iterator < search_string.length()){ inner
+line+=_token;
+if(search_string[kv_iterator] != '\n'){line+='\n';}
+} // if(processing_end_cap){
+
+line+="execf";
+cout << line << endl;
+return line;
+
+} // if(added_value){
+} // while(kv_iterator < search_string.length()){
+
+
+}
 } // if(on_token_line){
 } // if(key != ""){
 } // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
@@ -205,11 +273,11 @@ if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:         " << ke
 
 if(mode == "get_map_or_key_value"){
 string search_result;
-//search_result=get_map_or_key_value(target_token,search_string,key);
-search_result=alt_find(target_token,search_string,key);
+search_result=get_map_or_key_value(target_token,search_string,key);
+//search_result=alt_find(target_token,search_string,key);
 cout << search_result << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
-}
+} // if(mode == "get_map_or_key_value"){
 
 string current_dtg=get_dtg();
 cout << current_dtg;
@@ -219,7 +287,7 @@ string modify;
 modify=set_or_add_key_value_pair(target_token,search_string,key,value);
 cout << modify << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
-}
+} // if(mode == "set_or_add_key_value_pair"){
 return 0;
 
 
