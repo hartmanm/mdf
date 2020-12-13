@@ -12,8 +12,9 @@ const bool output_to_file=true;
 // META
 const string version="002"; 
 const string author="Michael N. Hartman"; 
-const string modification_date="Sun_Dec_13_15_11_14_UTC_2020"; 
+const string modification_date="Sun_Dec_13_17_08_43_UTC_2020"; 
 
+// TODO ensure to remove spaces when setting
 
 // c++ equalivent to:  DTG=$(date | tr ': ' '_')
 string get_dtg(){
