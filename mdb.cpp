@@ -126,10 +126,10 @@ if(processing_key_value == false && search_string[_iterator] == '\n'){
 // TODO can be improved
 int iterator=0;
 while(iterator < mod_line_start){_processed+=search_string[iterator];iterator++;}
+line+=nodash;
+line+=':';
+line+=value;
 _processed+=line;
-_processed+=key;
-_processed+=':';
-_processed+=value;
 while(_iterator < search_string.length()){_processed+=search_string[_iterator];_iterator++;}
 
 if(output_to_file){
@@ -141,6 +141,7 @@ to_file.close();
 }
 // for adding new key
 
+return line;
 } // if(processing_key_value == false && search_string[_iterator] == '\n'){
 } // if(on_token_line){
 _token="";
@@ -222,7 +223,10 @@ if(argc[3]){
 if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
 }
-if(argc[4]){value=argc[4];}
+//if(argc[4]){value=argc[4];}
+// process full value with spaces
+int args=4;
+while(argc[args]){value+=argc[args];args++;}
 cout << endl;
 cout << "target_token:              " << target_token << endl;
 cout << "target_file:               " << argc[2] << endl;
