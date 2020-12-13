@@ -12,7 +12,7 @@ const bool output_to_file=true;
 // META
 const string version="002"; 
 const string author="Michael N. Hartman"; 
-const string modification_date="Sun_Dec_13_17_08_43_UTC_2020"; 
+const string modification_date="Sun_Dec_13_23_01_17_2020"; 
 
 // TODO ensure to remove spaces when setting
 
@@ -226,7 +226,8 @@ if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
 //if(argc[4]){value=argc[4];}
 // process full value with spaces
 int args=4;
-while(argc[args]){value+=argc[args];args++;}
+if(argc[args]){value="";}
+while(argc[args]){value+=argc[args];value+=" ";args++;}
 cout << endl;
 cout << "target_token:              " << target_token << endl;
 cout << "target_file:               " << argc[2] << endl;
