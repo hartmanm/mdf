@@ -14,7 +14,13 @@ const string version="002";
 const string author="Michael N. Hartman"; 
 const string modification_date="Sun_Dec_13_23_01_17_2020"; 
 
-// TODO ensure to remove spaces when setting
+// TODO finish add_map / add testing / add to args
+
+// TODO ensure to remove spaces when re-setting
+
+// TODO make process launchable / persistent / keep injested in memory
+
+// TODO manage reserved char : \t \n when entered as a key/value
 
 // c++ equalivent to:  DTG=$(date | tr ': ' '_')
 string get_dtg(){
@@ -91,7 +97,6 @@ return _processed;
 
 
 // sets a keys value or adds a key value pair to a given map
-// TODO add a key value pair to a given map if key not present
 // searches a string datafile in the format:
 // map_name key:value key:value
 // map_name key:value key:value
@@ -206,7 +211,43 @@ return line;
 _iterator++;
 } // while(iterator < search_string.length()){
 return "-1";
-} // string set_or_add_key_value_pair(string target_token,string search_string, string key_value_pair){
+} // string set_or_add_key_value_pair(string target_token,string search_string, string key, string value){
+
+
+// add a map to a given search_string
+string add_map(string map, string search_string){
+// search for map in search_string
+// add if not present
+// if added map contains kv not present in existing map append them
+int _iterator=0;
+string map_name;
+string token;
+// if map is more than a mapname set mapname to first token
+while(_iterator < map.length()){
+if(map[_iterator] == '\t' || map[_iterator] == '\n' || _iterator == map.length()-1 ){
+map_name+=map[_iterator];
+} // if(map[_iterator] == '\t' || map[_iterator] == '\n' || _iterator == map.length()-1 ){
+_iterator++;
+} // while(_iterator < map.length()){
+
+while(_iterator < search_string.length()){
+if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+if(map_name == token){
+cout << "map already present" << endl;
+return map_name;
+// TODO  if added map contains kv not present in existing map append them
+}
+token="";
+} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+token+=search_string[_iterator];
+} // while(_iterator < search_string.length()){
+
+// map is not present append it
+search_string+=map;
+search_string+='\n';
+
+return map;
+} // string add_map(string map, string search_string){
 
 
 int main(int argv, char *argc[]){
