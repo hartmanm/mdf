@@ -8,7 +8,7 @@
 //#include <algorithm>
 using namespace std;
 // MAGIC BOOLS
-const bool output_to_file=false;
+const bool output_to_file=true;
 // META
 const string version="002"; 
 const string author="Michael N. Hartman"; 
@@ -141,7 +141,7 @@ string set_or_add_key_value_pair(string target_token,string search_string, strin
 int _iterator=0;
 const char* _char_iterator;
 string _token;
-//string _processed;
+string _processed;
 bool on_token_line=false;
 bool processing_key_value=false;
 bool processing_value=false;
@@ -150,6 +150,8 @@ bool added_value=false;
 string nodash=key.substr(1); 
 string line="";
 string old_value="";
+int mod_line_start;
+//int mod_line_end;
 while(_iterator < search_string.length()){
 if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 //if(target_token == _token || on_token_line || processing_key_value){
@@ -170,7 +172,11 @@ to_file.close();
 return _processed;}
 } // if(on_token_line){
 */
-if(target_token == _token){on_token_line=true;}
+if(target_token == _token){
+mod_line_start=_iterator - _token.length();
+
+
+on_token_line=true;}
 if(on_token_line){
 line+=_token;
 line+='\t';
@@ -236,6 +242,22 @@ kv_iterator++;
 } // while(kv_iterator < search_string.length() && search_string[kv_iterator] != '\n'){ inner
 line+=_token;
 if(search_string[kv_iterator] != '\n'){line+='\n';}
+
+// generate modified stream
+// can be inmproved
+_iterator=0;
+while(_iterator < mod_line_start){_processed+=search_string[_iterator];_iterator++;}
+_processed+=line;
+while(kv_iterator < search_string.length()){_processed+=search_string[kv_iterator];kv_iterator++;}
+
+if(output_to_file){
+// write result to file
+ofstream to_file;
+to_file.open ("result");
+to_file << _processed;
+to_file.close();
+}
+
 return line;
 } // if(processing_end_cap){
 
