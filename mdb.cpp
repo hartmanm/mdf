@@ -141,19 +141,23 @@ string set_or_add_key_value_pair(string target_token,string search_string, strin
 int _iterator=0;
 const char* _char_iterator;
 string _token;
-string _processed;
+//string _processed;
 bool on_token_line=false;
 bool processing_key_value=false;
 bool processing_value=false;
 bool processing_end_cap=false;
 bool added_value=false;
+string nodash=key.substr(1); 
+string line="";
 string old_value="";
 while(_iterator < search_string.length()){
 if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
-if(target_token == _token || on_token_line || processing_key_value){
-if(key == ""){_processed+=_token;_processed+='\t';}
-on_token_line=true;
-} // if(target_token == _token || on_token_line || processing_key_value){
+//if(target_token == _token || on_token_line || processing_key_value){
+//if(key == ""){_processed+=_token;_processed+='\t';}
+//on_token_line=true;
+//} // if(target_token == _token || on_token_line || processing_key_value){
+
+/*
 if(on_token_line){
 if(search_string[_iterator] == '\n'){
 if(output_to_file){
@@ -165,21 +169,47 @@ to_file.close();
 }
 return _processed;}
 } // if(on_token_line){
+*/
+if(target_token == _token){on_token_line=true;}
+if(on_token_line){
+line+=_token;
+line+='\t';
+}
+//cout << _token << endl;
 _token="";
 } // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+
+//if(target_token == _token){on_token_line=true;}
+
 if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
-_token+=search_string[_iterator];
-if(key != ""){
-string line="";
-string nodash=key.substr(1); 
-line+=target_token;
-line+='\t';
-line+=nodash;
+_token+=search_string[_iterator];}
+//if(_token == nodash){  cout << "processing_key_value" << endl;}
+
+//_token+=search_string[_iterator];
+//if(target_token == _token){
+  //on_token_line=true;
+  //cout << "on_token_line" << _token << search_string[_iterator+1] << endl;
+ // }
+
 if(on_token_line){
-line+= search_string[_iterator];
-if(_token == key && search_string[_iterator+1] == ':'){processing_key_value=true;_token="";
-}
+
+if(_token == nodash && search_string[_iterator+1] == ':'){processing_key_value=true;}
+
+
+
+
+
+if(processing_key_value){
+if(key != ""){
 if(search_string[_iterator] == ':'){
+//line+="pkv ";
+//line+=target_token;
+//line+='\t';
+line+=nodash;
+line+=':';
+//if(on_token_line){
+//line+= search_string[_iterator];
+
 _token="";
 int kv_iterator=_iterator;
 while(kv_iterator < search_string.length()){
@@ -212,9 +242,13 @@ return line;
 } // if(added_value){
 } // while(kv_iterator < search_string.length()){
 } // if(search_string[_iterator] == ':'){
-} // if(on_token_line){
+
 } // if(key != ""){
-} // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
+} // if(processing_key_value){
+
+
+} // if(on_token_line){
+//} // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
 _iterator++;
 } // while(iterator < search_string.length()){
 return "-1";
