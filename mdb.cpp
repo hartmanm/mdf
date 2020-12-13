@@ -119,7 +119,30 @@ on_token_line=true;
 if(on_token_line){
 line+=_token;
 line+='\t';
+if(processing_key_value == false && search_string[_iterator] == '\n'){
+
+// for adding new key
+// generate modified stream 
+// TODO can be improved
+int iterator=0;
+while(iterator < mod_line_start){_processed+=search_string[iterator];iterator++;}
+_processed+=line;
+_processed+=key;
+_processed+=':';
+_processed+=value;
+while(_iterator < search_string.length()){_processed+=search_string[_iterator];_iterator++;}
+
+if(output_to_file){
+// write result to file
+ofstream to_file;
+to_file.open ("result");
+to_file << _processed;
+to_file.close();
 }
+// for adding new key
+
+} // if(processing_key_value == false && search_string[_iterator] == '\n'){
+} // if(on_token_line){
 _token="";
 } // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
@@ -158,7 +181,7 @@ kv_iterator++;
 line+=_token;
 if(search_string[kv_iterator] != '\n'){line+='\n';}
 // generate modified stream
-// TODO can be inmproved
+// TODO can be improved
 _iterator=0;
 while(_iterator < mod_line_start){_processed+=search_string[_iterator];_iterator++;}
 _processed+=line;
@@ -181,7 +204,6 @@ return line;
 } // if(on_token_line){
 _iterator++;
 } // while(iterator < search_string.length()){
-
 return "-1";
 } // string set_or_add_key_value_pair(string target_token,string search_string, string key_value_pair){
 
