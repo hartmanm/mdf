@@ -10,9 +10,9 @@ using namespace std;
 // MAGIC BOOLS
 const bool output_to_file=false;
 // META
-const string version="001"; 
+const string version="002"; 
 const string author="Michael N. Hartman"; 
-const string modification_date="Sun_Dec__6_21_37_51_2020"; 
+const string modification_date="Sun_Dec_13_15_11_14_UTC_2020"; 
 
 
 // c++ equalivent to:  DTG=$(date | tr ': ' '_')
@@ -90,6 +90,19 @@ return _processed;
 
 
 string alt_find(string target_token,string search_string, string key){
+
+//str.replace(str.find(key),str2.length(),"preposition");
+
+//if(output_to_file){
+// write result to file
+//ofstream to_file;
+//to_file.open ("result");
+//to_file << _processed;
+//to_file.close();
+//}
+//return _processed;
+//} // if(key != "" && processing_key_value){
+
 std::size_t found = 0;
 found = target_token.find(search_string);
 cout << found << endl;
@@ -117,8 +130,9 @@ return "-2";
 } // string alt_find(string target_token,string search_string, string key){
 
 
-/// TODO
-// sets a keys value to adds a key value pair to a given map
+
+
+// sets a keys value or adds a key value pair to a given map
 // searches a string datafile in the format:
 // map_name key:value key:value
 // map_name key:value key:value
@@ -137,30 +151,9 @@ string old_value="";
 while(_iterator < search_string.length()){
 if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 if(target_token == _token || on_token_line || processing_key_value){
-//if(key != "" && processing_key_value){
-//_processed+=_token;
-
-
-
-//str.replace(str.find(key),str2.length(),"preposition");
-
-//if(output_to_file){
-// write result to file
-//ofstream to_file;
-//to_file.open ("result");
-//to_file << _processed;
-//to_file.close();
-//}
-//return _processed;
-//} // if(key != "" && processing_key_value){
-
-
-
 if(key == ""){_processed+=_token;_processed+='\t';}
 on_token_line=true;
 } // if(target_token == _token || on_token_line || processing_key_value){
-
-
 if(on_token_line){
 if(search_string[_iterator] == '\n'){
 if(output_to_file){
@@ -172,48 +165,33 @@ to_file.close();
 }
 return _processed;}
 } // if(on_token_line){
-
 _token="";
 } // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
 _token+=search_string[_iterator];
 if(key != ""){
 string line="";
+string nodash=key.substr(1); 
 line+=target_token;
+line+='\t';
+line+=nodash;
 if(on_token_line){
-
 line+= search_string[_iterator];
-cout << line << endl;
 if(_token == key && search_string[_iterator+1] == ':'){processing_key_value=true;_token="";
-
-cout << "inside :+1" << endl;
 }
 if(search_string[_iterator] == ':'){
 _token="";
-
-cout << "inside :" << endl;
-
 int kv_iterator=_iterator;
 while(kv_iterator < search_string.length()){
 if(search_string[kv_iterator] != '\t' && search_string[kv_iterator] != ':'){
 _token+=search_string[kv_iterator];
 }
 kv_iterator++;
-
-cout << _token << endl;
 if(search_string[kv_iterator] == '\t' || search_string[kv_iterator] == '\n'){
-
-//if(_token.length() < 1){}
-
-line+=value;
 added_value=true;
 }
-
 if(added_value){
 if(search_string[kv_iterator] == '\t' || search_string[kv_iterator] == '\n'){
-
-//if(_token.length() < 1){}
-
 line+=value;
 processing_end_cap=true;
 old_value=_token;
@@ -221,32 +199,26 @@ _token="";
 line+='\t';
 }
 if(processing_end_cap){
-while(kv_iterator < search_string.length()){
-
+_token="";
+while(kv_iterator < search_string.length() && search_string[kv_iterator] != '\n'){
 _token+=search_string[kv_iterator];
 kv_iterator++;
-} // while(kv_iterator < search_string.length()){ inner
+} // while(kv_iterator < search_string.length() && search_string[kv_iterator] != '\n'){ inner
 line+=_token;
 if(search_string[kv_iterator] != '\n'){line+='\n';}
-} // if(processing_end_cap){
-
-line+="execf";
-cout << line << endl;
 return line;
+} // if(processing_end_cap){
 
 } // if(added_value){
 } // while(kv_iterator < search_string.length()){
-
-
-}
+} // if(search_string[_iterator] == ':'){
 } // if(on_token_line){
 } // if(key != ""){
 } // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n'){
 _iterator++;
 } // while(iterator < search_string.length()){
-return _processed;
+return "-1";
 } // string set_or_add_key_value_pair(string target_token,string search_string, string key_value_pair){
-/// TODO
 
 
 int main(int argv, char *argc[]){
@@ -265,11 +237,11 @@ if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
 }
 if(argc[4]){value=argc[4];}
 cout << endl;
-cout << "target_token:         " << target_token << endl;
-cout << "target_file:          " << argc[2] << endl;
+cout << "target_token:              " << target_token << endl;
+cout << "target_file:               " << argc[2] << endl;
 cout << mode << ": " << mode << endl;
-if(mode == "get_map_or_key_value"){cout << "key:                  " << key << endl;}
-if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:         " << key << endl;}
+if(mode == "get_map_or_key_value"){cout << "key:                    " << key << endl;}
+if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:            " << key << endl;}
 
 if(mode == "get_map_or_key_value"){
 string search_result;
@@ -286,6 +258,7 @@ if(mode == "set_or_add_key_value_pair"){
 string modify;
 modify=set_or_add_key_value_pair(target_token,search_string,key,value);
 cout << modify << endl;
+//cout << "!" << modify << "!" << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
 } // if(mode == "set_or_add_key_value_pair"){
 return 0;
@@ -299,6 +272,7 @@ return 0;
 // time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'} > result; cat result
 // time ./mdb VERSION_CONTROL datafile VERSION
 
+// time ./mdb VERSION_CONTROL datafile -VERSION 002
 
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
