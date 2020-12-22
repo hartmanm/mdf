@@ -259,12 +259,34 @@ string search_string(istreambuf_iterator<char>{target_file}, {});
 string key="";
 string mode="";
 string value="None";
+int number_tokens=3;
+int i;
+int length_of_args;
 if(!argc[3]){mode="get_map_or_key_value";}
+
 if(argc[3]){
 //if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
-if(argc[3][1] == '-'){key=argc[3];mode="add_map";}
-}
+if(argc[3][1] == '-'){
+key="";
+mode="add_map"; 
+i=0; 
+length_of_args=0;
+while(number_tokens < argv){
+length_of_args+=int(string(argc[number_tokens]).length());
+// space between args
+length_of_args+=1;
+number_tokens++;
+} // while(number_tokens < argv){
+while(i < length_of_args){
+if(argc[3][i]){key+=argc[3][i];}
+if(! argc[3][i]){key+=' ';}
+i++;
+//cout << key << endl;
+} // while(i < length_of_args){
+} // if(argc[3][1] == '-'){
+} // if(argc[3]){
+
 //if(argc[4]){value=argc[4];}
 // process full value with spaces
 int args=4;
@@ -273,7 +295,7 @@ while(argc[args]){value+=argc[args];value+=" ";args++;}
 cout << endl;
 cout << "target_token:              " << target_token << endl;
 cout << "target_file:               " << argc[2] << endl;
-cout << mode << ": " << mode << endl;
+cout << "mode" << ": " << mode << endl;
 if(mode == "get_map_or_key_value"){cout << "key:                    " << key << endl;}
 if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:            " << key << endl;}
 if(mode == "add_map"){cout << "map:            " << key << endl;}
@@ -327,6 +349,8 @@ return 0;
 
 // test add_map
 // // time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
+
+// time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
 
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
@@ -473,7 +497,7 @@ cout << endl << "----------------------------------------" << endl;
 
 //string search_string(istreambuf_iterator<char>{target_file}, {});
 
-
+/*
 int _iterator=0;
 const char* _char_iterator;
 string _token;
@@ -516,6 +540,7 @@ to_file.close();
 cout << _processed << endl;
 
 return 0;}
+
 }
 //cout << "_processed" << _processed << endl;
 //cout << "_token" << _token << endl;
@@ -547,7 +572,7 @@ _iterator++;
 //cout << endl << _processed << endl;
 
 // for converting @ to ' '
-/*
+
 if(search_string[_iterator] != ' ' && search_string[_iterator] != '\n'){
 //if(search_string[_iterator] != '@' ){_token+=search_string[_iterator];}
 //if(search_string[_iterator] == '@' ){_token+=' ';}
@@ -565,7 +590,7 @@ return 0;
 }
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
-
+/*
 string alt_find(string target_token,string search_string, string key){
 
 //str.replace(str.find(key),str2.length(),"preposition");
@@ -606,4 +631,4 @@ iterator++;
 return "-2";
 } // string alt_find(string target_token,string search_string, string key){
 
-
+*/
