@@ -326,7 +326,7 @@ return 0;
 
 
 // test add_map
-// // time ./mdb NEW_MAP datafile --this:test is the:6799 full map:edout 99:contents
+// // time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
 
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
