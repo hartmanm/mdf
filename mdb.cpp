@@ -313,6 +313,7 @@ bool is_key=false;
 int number_tokens=3;
 int i;
 int j;
+int jj;
 bool is_tab=false;
 int length_of_args;
 string token="";
@@ -344,20 +345,26 @@ value="";
 is_key=false;
 token+=argc[number_tokens-1][j];
 if(argc[number_tokens-1][j] == ':'){
+cout << jj << "//" << length_of_args << endl;
 // look ahead to the next token
-int jj=j;
+jj=j;
 is_tab=false;
-while(jj < int(string(argc[number_tokens]).length())){
-value="";
+
+// TODO !!
+
+
+while(jj < int(string(argc[number_tokens]).length()) && number_tokens < argv){
 token+=argc[number_tokens][jj];
 if(argc[number_tokens][jj] == ':'){
 is_tab=true;
+cout << jj << "is_tab" << length_of_args << endl;
 } // if(argc[number_tokens][jj] == ':'){
 jj++;
-} // while(jj < int(string(argc[number_tokens]).length())){
+} // while(jj < int(string(argc[number_tokens]).length()) && number_tokens < argv){
 is_key=true;
 } // if(argc[number_tokens-1][j] == ':'){
 j++;
+cout << jj << "j++" << length_of_args << endl;
 } // while(j < int(string(argc[number_tokens-1]).length())){
 last_key=token;
 if(! is_tab){key+=' ';}
@@ -416,7 +423,7 @@ if(output_to_file){cout << "result also written to the file: result" << endl;}
 
 
 return 0;
-
+}
 
 // time ./mdb VERSION_CONTROL datafile 
 // time grep  VERSION_CONTROL datafile 
@@ -669,7 +676,7 @@ _token+=search_string[_iterator];
 // time ./mdb VERSION_CONTROL datafile VERSION
 
 
-}
+
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
 /*
