@@ -215,13 +215,20 @@ return "-1";
 
 
 // add a map to a given search_string
-string add_map(string map, string search_string){
+string add_map(string search_string, string map_name, string map){
 // search for map in search_string
 // add if not present
 // if added map contains kv not present in existing map append them
+//cout << search_string << endl;
+//cout << map_name << endl;
+//cout << map << endl;
+
+// ensure map is tab IFS
+
+string processed_map="";
 int _iterator=0;
-string map_name;
 string token;
+/*
 // if map is more than a mapname set mapname to first token
 while(_iterator < map.length()){
 if(map[_iterator] == '\t' || map[_iterator] == '\n' || _iterator == map.length()-1 ){
@@ -229,24 +236,45 @@ map_name+=map[_iterator];
 } // if(map[_iterator] == '\t' || map[_iterator] == '\n' || _iterator == map.length()-1 ){
 _iterator++;
 } // while(_iterator < map.length()){
+*/
 
 while(_iterator < search_string.length()){
 if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
-if(map_name == token){
-cout << "map already present" << endl;
-return map_name;
-// TODO  if added map contains kv not present in existing map append them
+cout << "!" << token << "!" << endl;
+cout << "!" << map_name << "!" << endl;
+if(map_name == token || '\n'+map_name == token){
+return "map already present";
+} // if(map_name == token || '\n'+map_name == token){
+token="";
+} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+token+=search_string[_iterator];
+_iterator++;
+} // while(_iterator < search_string.length()){
+
+//cout << "parsing map" << endl;
+
+// translate correct spaces to tabs
+// can be universal method
+_iterator=0;
+while(_iterator < map.length()){
+if(map[_iterator] == ' ' || map[_iterator] == '\t'){
+if(_iterator == 0){
+
+
 }
 token="";
 } // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
 token+=search_string[_iterator];
+_iterator++;
 } // while(_iterator < search_string.length()){
 
 // map is not present append it
-search_string+=map;
+search_string+=map_name;
+search_string+='\t';
+search_string+=processed_map;
 search_string+='\n';
 
-return map;
+return search_string;
 } // string add_map(string map, string search_string){
 
 
@@ -322,7 +350,7 @@ if(output_to_file){cout << "result also written to the file: result" << endl;}
 
 if(mode == "add_map"){
 string add;
-add=add_map(key, search_string);
+add=add_map(search_string, argc[1], key);
 cout << add << endl;
 //cout << "!" << add << "!" << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
