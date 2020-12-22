@@ -263,10 +263,32 @@ if(_iterator == 0){
 
 }
 token="";
-} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+} // 
 token+=search_string[_iterator];
 _iterator++;
 } // while(_iterator < search_string.length()){
+
+
+/*
+int number_tokens=3;
+int length_of_args=0;
+while(number_tokens < argv){
+length_of_args+=int(string(argc[number_tokens]).length());
+// space between args
+length_of_args+=1;
+number_tokens++;
+} // while(number_tokens < argv){
+while(i < length_of_args){
+if(argc[3][i]){key+=argc[3][i];}
+if(! argc[3][i]){key+=' ';}
+i++;
+//cout << key << endl;
+} // while(i < length_of_args){
+*/
+
+
+
+
 
 // map is not present append it
 search_string+=map_name;
@@ -287,9 +309,14 @@ string search_string(istreambuf_iterator<char>{target_file}, {});
 string key="";
 string mode="";
 string value="None";
+bool is_key=false;
 int number_tokens=3;
 int i;
+int j;
+bool is_tab=false;
 int length_of_args;
+string token="";
+string last_key="";
 if(!argc[3]){mode="get_map_or_key_value";}
 
 if(argc[3]){
@@ -300,6 +327,7 @@ key="";
 mode="add_map"; 
 i=0; 
 length_of_args=0;
+// caculate the length of the map to add
 while(number_tokens < argv){
 length_of_args+=int(string(argc[number_tokens]).length());
 // space between args
@@ -308,7 +336,33 @@ number_tokens++;
 } // while(number_tokens < argv){
 while(i < length_of_args){
 if(argc[3][i]){key+=argc[3][i];}
-if(! argc[3][i]){key+=' ';}
+if(! argc[3][i]){
+// process spaces and tabs to ensure tab IFS
+j=0;
+while(j < int(string(argc[number_tokens-1]).length())){
+value="";
+is_key=false;
+token+=argc[number_tokens-1][j];
+if(argc[number_tokens-1][j] == ':'){
+// look ahead to the next token
+int jj=j;
+is_tab=false;
+while(jj < int(string(argc[number_tokens]).length())){
+value="";
+token+=argc[number_tokens][jj];
+if(argc[number_tokens][jj] == ':'){
+is_tab=true;
+} // if(argc[number_tokens][jj] == ':'){
+jj++;
+} // while(jj < int(string(argc[number_tokens]).length())){
+is_key=true;
+} // if(argc[number_tokens-1][j] == ':'){
+j++;
+} // while(j < int(string(argc[number_tokens-1]).length())){
+last_key=token;
+if(! is_tab){key+=' ';}
+if(is_tab){key+='\t';}
+} // if(! argc[3][i]){
 i++;
 //cout << key << endl;
 } // while(i < length_of_args){
@@ -614,7 +668,7 @@ _token+=search_string[_iterator];
 // time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'}
 // time ./mdb VERSION_CONTROL datafile VERSION
 
-return 0;
+
 }
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
