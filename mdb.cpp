@@ -261,8 +261,9 @@ string mode="";
 string value="None";
 if(!argc[3]){mode="get_map_or_key_value";}
 if(argc[3]){
-if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
+//if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
+if(argc[3][1] == '-'){key=argc[3];mode="add_map";}
 }
 //if(argc[4]){value=argc[4];}
 // process full value with spaces
@@ -275,6 +276,7 @@ cout << "target_file:               " << argc[2] << endl;
 cout << mode << ": " << mode << endl;
 if(mode == "get_map_or_key_value"){cout << "key:                    " << key << endl;}
 if(mode == "set_or_add_key_value_pair"){cout << "key_value_pair:            " << key << endl;}
+if(mode == "add_map"){cout << "map:            " << key << endl;}
 
 if(mode == "get_map_or_key_value"){
 string search_result;
@@ -294,6 +296,21 @@ cout << modify << endl;
 //cout << "!" << modify << "!" << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
 } // if(mode == "set_or_add_key_value_pair"){
+
+
+if(mode == "add_map"){
+string add;
+add=add_map(key, search_string);
+cout << add << endl;
+//cout << "!" << add << "!" << endl;
+if(output_to_file){cout << "result also written to the file: result" << endl;}
+} // if(mode == "add_map"){
+
+
+
+
+
+
 return 0;
 
 
@@ -306,6 +323,10 @@ return 0;
 // time ./mdb VERSION_CONTROL datafile VERSION
 
 // time ./mdb VERSION_CONTROL datafile -VERSION 002
+
+
+// test add_map
+// // time ./mdb NEW_MAP datafile --this:test is the:6799 full map:edout 99:contents
 
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
