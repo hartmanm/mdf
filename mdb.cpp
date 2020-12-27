@@ -323,6 +323,7 @@ if(!argc[3]){mode="get_map_or_key_value";}
 if(argc[3]){
 //if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
+if(argc[3][0] != '-' && argc[3][1] != '-'){mode="get_map_or_key_value";}
 if(argc[3][1] == '-'){
 key="";
 mode="add_map"; 
