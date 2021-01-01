@@ -314,10 +314,9 @@ int number_tokens=2;
 int i;
 int j;
 int jj;
-int start_of_third;
+
 bool is_tab=false;
 int length_of_args;
-int end_of_third;
 string token="";
 string last_key="";
 if(!argc[3]){mode="get_map_or_key_value";}
@@ -328,7 +327,6 @@ cout << argc[3] << " :argc[3]" << endl;
 cout << argv << " :argv" << endl;
 cout << string(argc[8]) << " :string(argc[8)]" << endl;
 
-//if(argc[3][0] != '-'){key=argc[3];mode="get_map_or_key_value";}
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
 if(argc[3][0] != '-' && argc[3][1] != '-'){mode="get_map_or_key_value";}
 if(argc[3][1] == '-'){
@@ -336,103 +334,25 @@ key="";
 mode="add_map"; 
 i=0; 
 length_of_args=0;
-start_of_third=0;
-end_of_third=0;
+
 // caculate the length of the map to add
 while(number_tokens < argv){
 length_of_args+=int(string(argc[number_tokens]).length());
-
-// space between args
-//length_of_args+=1;
-cout << argc[number_tokens] << " :argc[number_tokens]" << endl;
 number_tokens++;
-// log the length at start / end of 3rd parameter
-if(number_tokens == 3){start_of_third=length_of_args;}
-if(number_tokens == 4){end_of_third=length_of_args;}
-
-
-cout << number_tokens << " :number_tokens" << endl;
-cout << length_of_args << " :length_of_args" << endl;
-cout << start_of_third << " :start_of_third" << endl;
-cout << end_of_third << " :end_of_third" << endl;
-
 } // while(number_tokens < argv){
 
 
-cout << length_of_args << " :!length_of_args" << endl;
-
-/*
-j=start_of_third+2;
-// process first key of map
-//while(i < end_of_third){
-// process spaces and tabs to ensure tab IFS
-//j=0;
-while(j < end_of_third){
-value="";
-is_key=false;
-token+=argc[3][j];
-if(argc[3][j] == ':'){
-
-// look ahead to the next token
-jj=j;
-cout << jj << "//" << length_of_args << endl;
-is_tab=false;
-
-// TODO !!
-
-
-while(jj < int(string(argc[3]).length())){
-token+=argc[3][jj];
-if(argc[3][jj] == ':'){
-is_tab=true;
-cout << jj << "is_tab" << length_of_args << endl;
-} // if(argc[3][jj] == ':'){
-jj++;
-} // while(jj < int(string(argc[3]).length())){
-is_key=true;
-} // if(argc[3-1][j] == ':'){
-j++;
-
-cout << jj << "j++" << length_of_args << endl;
-} //while(j < end_of_third){
-last_key=token;
-key+=token;
-if(! is_tab){key+=' ';}
-if(is_tab){key+='\t';}
-
-//i++;
-//cout << key << endl;
-//} // while(i < end_of_third){
-
-
-
-
-cout << key << " :key@1" << endl;
-*/
-
 i=3;
 while(i < argv){
-// process spaces and tabs to ensure tab IFS
+// process spaces and tabs to ensure tab IFS and key values with spaces are processed as such
 j=0;
 token="";
 is_tab=false;
 while(j < int(string(argc[i]).length())){
-
 value="";
 is_key=false;
 token+=argc[i][j];
-
-//if(argc[i][j] == ':'){
-
-// look ahead to the next token
-
-//cout << jj << "//" << length_of_args << endl;
-//is_tab=true;
-
-// TODO !!
-
-
-
+// look ahead to the next token and flag the end of the key if it is a new key
 jj=0;
 if(i+1 < argv){
 while(jj < int(string(argc[i+1]).length()) && ! is_tab){
@@ -440,31 +360,17 @@ if(argc[i+1][jj] == ':'){
 is_tab=true;
 cout << jj << "is_tab" << endl;
 jj=int(string(argc[i+1]).length());
-} // if(argc[number_tokens][jj] == ':'){
+} // if(argc[i+1][jj] == ':'){
 jj++;
 } // while(jj < int(string(argc[i+1]).length()) && ! is_tab){
-//cout << int(string(argc[i+1]).length()) << " :int(string(argc[i+1]).length())" << endl;
 } // if(i+1 < argv){
-
-
-
-  
-//} // if(argc[i][j] == ':'){
 j++;
-
-//cout << jj << "j++" << length_of_args << endl;
 } // while(j < int(string(argc[i]).length())){
-
 key+=token;
-
 if(! is_tab){key+=' ';}
 if(is_tab){key+='\t';}
-if(is_tab){key+='T';}
-cout << key << " !key" << endl;
 is_tab=false;
-cout << i << " :i" << endl;
 i++;
-
 } // while(i < argv){
 
 
