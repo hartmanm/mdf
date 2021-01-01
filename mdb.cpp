@@ -334,17 +334,14 @@ key="";
 mode="add_map"; 
 i=0; 
 length_of_args=0;
-
 // caculate the length of the map to add
 while(number_tokens < argv){
 length_of_args+=int(string(argc[number_tokens]).length());
 number_tokens++;
 } // while(number_tokens < argv){
-
-
+// process spaces and tabs to ensure tab IFS and key values with spaces are processed as such
 i=3;
 while(i < argv){
-// process spaces and tabs to ensure tab IFS and key values with spaces are processed as such
 j=0;
 token="";
 is_tab=false;
@@ -372,31 +369,17 @@ if(is_tab){key+='\t';}
 is_tab=false;
 i++;
 } // while(i < argv){
-
-
-cout << key << " :@2" << endl;
-
+// remove leading --
 i=2;
 string final_key;
 while(i < key.length()){
 final_key+=key[i];
-cout << final_key << " :final_key@3" << endl;
 i++;
 } // while(i < key.length()){
-key = final_key;
-
-cout << key << " :final_key@3" << endl;
-
-
-
-
+key=final_key;
 } // if(argc[3][1] == '-'){
 } // if(argc[3]){
 
-
-
-
-//if(argc[4]){value=argc[4];}
 // process full value with spaces
 int args=4;
 if(argc[args]){value="";}
