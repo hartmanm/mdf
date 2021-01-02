@@ -10,11 +10,11 @@ using namespace std;
 // MAGIC BOOLS
 const bool output_to_file=true;
 // META
-const string version="002"; 
+const string version="003"; 
 const string author="Michael N. Hartman"; 
-const string modification_date="Fri_Jan__1_22_37_27_UTC_2021"; 
+const string modification_date="Sat_Jan__2_00_25_23_UTC_2021"; 
 
-// TODO finish add_map / add testing / add to args
+// TODO add testing
 
 // TODO ensure to remove spaces when re-setting
 
@@ -214,113 +214,39 @@ return "-1";
 } // string set_or_add_key_value_pair(string target_token,string search_string, string key, string value){
 
 
-// add a map to a given search_string
+// add a map to a given search_string / datafile
 string add_map(string search_string, string map_name, string map){
 // search for map in search_string
 // add if not present
-// if added map contains kv not present in existing map append them
-//cout << search_string << endl;
-//cout << map_name << endl;
-//cout << map << endl;
+// return error string otherwise
 
 // ensure map is tab IFS
-
 string processed_map="";
 int _iterator=0;
 string token;
-/*
-// if map is more than a mapname set mapname to first token
-while(_iterator < map.length()){
-if(map[_iterator] == '\t' || map[_iterator] == '\n' || _iterator == map.length()-1 ){
-map_name+=map[_iterator];
-} // if(map[_iterator] == '\t' || map[_iterator] == '\n' || _iterator == map.length()-1 ){
-_iterator++;
-} // while(_iterator < map.length()){
-*/
-
 while(_iterator <= search_string.length()){
-
 if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n' && search_string[_iterator] != ' '){
 token+=search_string[_iterator];
 } // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n' && search_string[_iterator] != ' '){
-
-
-//if( _iterator == search_string.length()){cout << " _iterator == search_string.length()" << endl;}
 if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n' || _iterator == search_string.length()){
-cout << "!?" << token << "!" << endl;
-cout << "!" << map_name << "!" << endl;
-cout << "!?.length()" << token.length() << "!" << endl;
-cout << "!.length()" << map_name.length() << "!" << endl;
-cout << _iterator << endl;
-cout << search_string.length() << endl;
-cout << search_string[_iterator] << endl;
 int extra_char_check=0;
 string processed_token="";
 while(extra_char_check < map_name.length()){processed_token+=token[extra_char_check]; extra_char_check++;}
-cout << "!token: " << token << "!" << endl;
-cout << "!processed_token: " << processed_token << "!" << endl;
 if(map_name == processed_token){
-return "map already present";
+// map already exists key / value changes should be made with set_or_add_key_value_pair()
+return "map already present; key / value changes should be made with set_or_add_key_value_pair()";
 } // if(map_name == processed_token){
 token="";
-} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'{
-
-/*
-cout << _iterator << endl;
-cout << search_string.length() << endl;
-cout << search_string[_iterator] << endl;
-
-cout << token << endl;
-*/
+} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n' || _iterator == search_string.length()){
 _iterator++;
 } // while(_iterator <= search_string.length()){
 
-//cout << "parsing map" << endl;
-
-// translate correct spaces to tabs
-// can be universal method
-//_iterator=0;
-//while(_iterator < map.length()){
-//if(map[_iterator] == ' ' || map[_iterator] == '\t'){
-//if(_iterator == 0){
-
-
-//}
-//token="";
-//} // 
-//token+=search_string[_iterator];
-//_iterator++;
-//} // while(_iterator < search_string.length()){
-
-
-/*
-int number_tokens=3;
-int length_of_args=0;
-while(number_tokens < argv){
-length_of_args+=int(string(argc[number_tokens]).length());
-// space between args
-length_of_args+=1;
-number_tokens++;
-} // while(number_tokens < argv){
-while(i < length_of_args){
-if(argc[3][i]){key+=argc[3][i];}
-if(! argc[3][i]){key+=' ';}
-i++;
-//cout << key << endl;
-} // while(i < length_of_args){
-*/
-
-
-
-
-
 // map is not present append it
-
+processed_map+='\n';
 processed_map+=map_name;
 processed_map+='\t';
 processed_map+=map;
 processed_map+='\n';
-
 search_string+=processed_map;
 
 if(output_to_file){
@@ -330,8 +256,6 @@ to_file.open ("result");
 to_file << search_string;
 to_file.close();
 }
-// for adding new key
-
 
 return search_string;
 } // string add_map(string map, string search_string){
@@ -438,7 +362,7 @@ if(output_to_file){cout << "result also written to the file: result" << endl;}
 } // if(mode == "get_map_or_key_value"){
 
 string current_dtg=get_dtg();
-cout << current_dtg;
+cout << current_dtg << endl;
 
 if(mode == "set_or_add_key_value_pair"){
 string modify;
@@ -447,7 +371,6 @@ cout << modify << endl;
 //cout << "!" << modify << "!" << endl;
 if(output_to_file){cout << "result also written to the file: result" << endl;}
 } // if(mode == "set_or_add_key_value_pair"){
-
 
 if(mode == "add_map"){
 string add;
@@ -484,6 +407,20 @@ return 0;
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
 
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
