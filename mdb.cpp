@@ -12,7 +12,7 @@ const bool output_to_file=true;
 // META
 const string version="003"; 
 const string author="Michael N. Hartman"; 
-const string modification_date="Sat_Jan__2_00_25_23_UTC_2021"; 
+const string modification_date="Sat_Jan__2_01_02_46_2021"; 
 
 // TODO add testing
 
@@ -419,6 +419,10 @@ return 0;
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
 
 
+// g++ -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
+
+
+// clang++ -std=c++2a -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
 
 
 
