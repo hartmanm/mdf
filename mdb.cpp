@@ -47,8 +47,8 @@ return no_spaces_date;
 string get_map_or_key_value(string target_token,string search_string, string key){
 int _iterator=0;
 const char* _char_iterator;
-string _token;
-string _processed;
+string _token="";
+string _processed="";
 bool on_token_line=false;
 bool processing_key_value=false;
 while(_iterator < search_string.length()){
@@ -77,7 +77,8 @@ to_file.open ("result");
 to_file << _processed;
 to_file.close();
 }
-return _processed;}
+return _processed;
+}
 }
 _token="";
 }
@@ -284,12 +285,8 @@ if(!argc[3]){mode="get_map_or_key_value";}
 
 if(argc[3]){
 
-cout << argc[3] << " :argc[3]" << endl;
-cout << argv << " :argv" << endl;
-cout << string(argc[8]) << " :string(argc[8)]" << endl;
-
 if(argc[3][0] == '-'){key=argc[3];mode="set_or_add_key_value_pair";}
-if(argc[3][0] != '-' && argc[3][1] != '-'){mode="get_map_or_key_value";}
+if(argc[3][0] != '-' && argc[3][1] != '-'){mode="get_map_or_key_value";key=argc[3];}
 if(argc[3][1] == '-'){
 key="";
 mode="add_map"; 
@@ -316,7 +313,6 @@ if(i+1 < argv){
 while(jj < int(string(argc[i+1]).length()) && ! is_tab){
 if(argc[i+1][jj] == ':'){
 is_tab=true;
-cout << jj << "is_tab" << endl;
 jj=int(string(argc[i+1]).length());
 } // if(argc[i+1][jj] == ':'){
 jj++;
@@ -388,6 +384,7 @@ if(output_to_file){cout << "result also written to the file: result" << endl;}
 return 0;
 }
 
+// test get kv
 // time ./mdb VERSION_CONTROL datafile 
 // time grep  VERSION_CONTROL datafile 
 
@@ -396,8 +393,14 @@ return 0;
 // time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'} > result; cat result
 // time ./mdb VERSION_CONTROL datafile VERSION
 
+// test set_kv
 // time ./mdb VERSION_CONTROL datafile -VERSION 002
 
+// test add kv no value
+// time ./mdb VERSION_CONTROL datafile -NEW_VERSION
+
+// test add kv with value
+// time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2 
 
 // test add_map
 // // time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
@@ -411,7 +414,9 @@ return 0;
 
 
 
+// run tests
 
+// clang++-7 -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
 
 
 
