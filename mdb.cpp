@@ -12,7 +12,7 @@ const bool output_to_file=true;
 // META
 const string version="002"; 
 const string author="Michael N. Hartman"; 
-const string modification_date="Sun_Dec_27_21_39_53_UTC_2020"; 
+const string modification_date="Fri_Jan__1_22_37_27_UTC_2021"; 
 
 // TODO finish add_map / add testing / add to args
 
@@ -238,35 +238,59 @@ _iterator++;
 } // while(_iterator < map.length()){
 */
 
-while(_iterator < search_string.length()){
-if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
-cout << "!" << token << "!" << endl;
-cout << "!" << map_name << "!" << endl;
-if(map_name == token || '\n'+map_name == token){
-return "map already present";
-} // if(map_name == token || '\n'+map_name == token){
-token="";
-} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'){
+while(_iterator <= search_string.length()){
+
+if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n' && search_string[_iterator] != ' '){
 token+=search_string[_iterator];
+} // if(search_string[_iterator] != '\t' && search_string[_iterator] != '\n' && search_string[_iterator] != ' '){
+
+
+//if( _iterator == search_string.length()){cout << " _iterator == search_string.length()" << endl;}
+if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n' || _iterator == search_string.length()){
+cout << "!?" << token << "!" << endl;
+cout << "!" << map_name << "!" << endl;
+cout << "!?.length()" << token.length() << "!" << endl;
+cout << "!.length()" << map_name.length() << "!" << endl;
+cout << _iterator << endl;
+cout << search_string.length() << endl;
+cout << search_string[_iterator] << endl;
+int extra_char_check=0;
+string processed_token="";
+while(extra_char_check < map_name.length()){processed_token+=token[extra_char_check]; extra_char_check++;}
+cout << "!token: " << token << "!" << endl;
+cout << "!processed_token: " << processed_token << "!" << endl;
+if(map_name == processed_token){
+return "map already present";
+} // if(map_name == processed_token){
+token="";
+} // if(search_string[_iterator] == '\t' || search_string[_iterator] == '\n'{
+
+/*
+cout << _iterator << endl;
+cout << search_string.length() << endl;
+cout << search_string[_iterator] << endl;
+
+cout << token << endl;
+*/
 _iterator++;
-} // while(_iterator < search_string.length()){
+} // while(_iterator <= search_string.length()){
 
 //cout << "parsing map" << endl;
 
 // translate correct spaces to tabs
 // can be universal method
-_iterator=0;
-while(_iterator < map.length()){
-if(map[_iterator] == ' ' || map[_iterator] == '\t'){
-if(_iterator == 0){
+//_iterator=0;
+//while(_iterator < map.length()){
+//if(map[_iterator] == ' ' || map[_iterator] == '\t'){
+//if(_iterator == 0){
 
 
-}
-token="";
-} // 
-token+=search_string[_iterator];
-_iterator++;
-} // while(_iterator < search_string.length()){
+//}
+//token="";
+//} // 
+//token+=search_string[_iterator];
+//_iterator++;
+//} // while(_iterator < search_string.length()){
 
 
 /*
@@ -291,10 +315,23 @@ i++;
 
 
 // map is not present append it
-search_string+=map_name;
-search_string+='\t';
+
+processed_map+=map_name;
+processed_map+='\t';
+processed_map+=map;
+processed_map+='\n';
+
 search_string+=processed_map;
-search_string+='\n';
+
+if(output_to_file){
+// write result to file
+ofstream to_file;
+to_file.open ("result");
+to_file << search_string;
+to_file.close();
+}
+// for adding new key
+
 
 return search_string;
 } // string add_map(string map, string search_string){
