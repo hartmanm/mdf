@@ -19,6 +19,8 @@ const string modification_date="Sun_Jan__3_20_12_41_2021";
 
 // TODO ensure to remove spaces when re-setting
 
+// TODO manage likely errors in datafile 
+
 // TODO make process launchable / persistent / keep injested in memory
 
 // TODO manage reserved char : \t \n when entered as a key/value
@@ -269,6 +271,7 @@ if(!argc[2]){cout << "missing target datafile!" << endl; return 0;}
 string target_token=argc[1];
 ifstream target_file(argc[2]);
 string search_string(istreambuf_iterator<char>{target_file}, {});
+search_string+='\n';
 string key="";
 string mode="";
 string value="None";
