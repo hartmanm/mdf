@@ -9,12 +9,13 @@
 using namespace std;
 // MAGIC BOOLS
 const bool output_to_file=true;
+const string output_file="result";
 // META
 const string version="003"; 
 const string author="Michael N. Hartman"; 
-const string modification_date="Sat_Jan__2_01_02_46_2021"; 
+const string modification_date="Sun_Jan__3_20_12_41_2021"; 
 
-// TODO add testing
+// TODO add testing //
 
 // TODO ensure to remove spaces when re-setting
 
@@ -59,7 +60,7 @@ _processed+=_token;
 if(output_to_file){
 // write result to file
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << _processed;
 to_file.close();
 }
@@ -73,7 +74,7 @@ if(search_string[_iterator] == '\n'){
 if(output_to_file){
 // write result to file
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << _processed;
 to_file.close();
 }
@@ -141,7 +142,7 @@ while(_iterator < search_string.length()){_processed+=search_string[_iterator];_
 if(output_to_file){
 // write result to file
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << _processed;
 to_file.close();
 }
@@ -196,7 +197,7 @@ while(kv_iterator < search_string.length()){_processed+=search_string[kv_iterato
 if(output_to_file){
 // write result to file
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << _processed;
 to_file.close();
 }
@@ -253,7 +254,7 @@ search_string+=processed_map;
 if(output_to_file){
 // write result to file
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << search_string;
 to_file.close();
 }
@@ -604,7 +605,7 @@ if(target_token == _token || on_token_line || processing_key_value){
 if(key != "" && processing_key_value){
 _processed+=_token;
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << _processed;
 to_file.close();
 cout << _processed << endl;
@@ -620,7 +621,7 @@ if(search_string[_iterator] == '\n'){
 
 // write result to file
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << _processed;
 to_file.close();
 cout << _processed << endl;
@@ -684,7 +685,7 @@ string alt_find(string target_token,string search_string, string key){
 //if(output_to_file){
 // write result to file
 //ofstream to_file;
-//to_file.open ("result");
+//to_file.open (output_file);
 //to_file << _processed;
 //to_file.close();
 //}
@@ -704,7 +705,7 @@ if(search_string[iterator] == '\t' || search_string[iterator] == '\n')
 {
 // write result to file
 ofstream to_file;
-to_file.open ("result");
+to_file.open (output_file);
 to_file << _processed;
 to_file.close();
 return _processed;  
