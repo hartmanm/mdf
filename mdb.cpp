@@ -411,7 +411,7 @@ return 0;
 
 // clang++-7 -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
 
-
+// see aggregate below
 
 
 // run tests
@@ -421,6 +421,17 @@ return 0;
 
 // g++ -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
 
+
+// this one // c++20 pure
+
+// compile
+// test returning a map
+// test returning a key from a given map
+// test setting a kv 
+// test adding a key with no value
+// test adding a key with multiple tokens via space based ifs
+// test adding a new map 
+// test attempting to overwrite an existing map with a newmap
 
 // clang++ -std=c++2a -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
 
