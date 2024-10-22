@@ -1,6 +1,7 @@
 // Copyright (c) 2020 Michael Neill Hartman. All rights reserved.
 // mnh_license@proton.me
 // https://github.com/hartmanm
+// cpp api for add/get/set line based maps with tab ifs key:values for text based datafiles
 
 #include <iostream>
 #include <string>
