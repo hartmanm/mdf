@@ -1,3 +1,7 @@
+// Copyright (c) 2020 Michael Neill Hartman. All rights reserved.
+// mnh_license@proton.me
+// https://github.com/hartmanm
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -389,42 +393,47 @@ return 0;
 }
 
 // test get kv
-// time ./mdb VERSION_CONTROL datafile 
+// time ./mdf VERSION_CONTROL datafile 
 // time grep  VERSION_CONTROL datafile 
 
 // time grep  VERSION_CONTROL datafile  > result; cat result
 
 // time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'} > result; cat result
-// time ./mdb VERSION_CONTROL datafile VERSION
+// time ./mdf VERSION_CONTROL datafile VERSION
 
 // test set_kv
-// time ./mdb VERSION_CONTROL datafile -VERSION 002
+// time ./mdf VERSION_CONTROL datafile -VERSION 002
 
 // test add kv no value
-// time ./mdb VERSION_CONTROL datafile -NEW_VERSION
+// time ./mdf VERSION_CONTROL datafile -NEW_VERSION
 
 // test add kv with value
-// time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2 
+// time ./mdf VERSION_CONTROL datafile -NEW_VERSION_2 the 2 
 
 // test add_map
-// // time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
+// // time ./mdf NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
 
-// time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
+// time ./mdf NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
 
-// clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
+/*
+ clang++ -pthread -std=c++17 -o mdf mdf.cpp
+ ./mdf NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
+*/
 
-// clang++-7 -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents
 
 // see aggregate below
 
 
 // run tests
 
-// clang++-7 -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
+/*
+exec "`head -432 mdf.cpp | tail -1`""
 
+clang++ -pthread -std=c++17 -o mdf mdf.cpp ; time ./mdf VERSION_CONTROL datafile; time ./mdf VERSION_CONTROL datafile VERSION; time ./mdf VERSION_CONTROL datafile -VERSION 003; time ./mdf VERSION_CONTROL datafile -NEW_VERSION; time ./mdf VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdf NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdf NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
 
-// g++ -pthread -std=c++17 -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
+g++ -pthread -std=c++17 -o mdf mdf.cpp ; time ./mdf VERSION_CONTROL datafile; time  ./mdf VERSION_CONTROL datafile VERSION; time  ./mdf VERSION_CONTROL datafile -VERSION 003; time  ./mdf VERSION_CONTROL datafile -NEW_VERSION; time  ./mdf VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time  ./mdf NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdf NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
 
+*/
 
 // this one // c++20 pure
 
@@ -437,8 +446,9 @@ return 0;
 // test adding a new map 
 // test attempting to overwrite an existing map with a newmap
 
-// clang++ -std=c++2a -o mdb mdb.cpp; time ./mdb VERSION_CONTROL datafile; time ./mdb VERSION_CONTROL datafile VERSION; time ./mdb VERSION_CONTROL datafile -VERSION 003; time ./mdb VERSION_CONTROL datafile -NEW_VERSION; time ./mdb VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdb NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdb NEW_MAP result --this:test is  the:6799 full map:edout 99:contents; 
-
+/*
+clang++ -std=c++2a -o mdf mdf.cpp; time ./mdf VERSION_CONTROL datafile; time ./mdf VERSION_CONTROL datafile VERSION; time ./mdf VERSION_CONTROL datafile -VERSION 003; time ./mdf VERSION_CONTROL datafile -NEW_VERSION; time ./mdf VERSION_CONTROL datafile -NEW_VERSION_2 the 2; time ./mdf NEW_MAP datafile --this:test is  the:6799 full map:edout 99:contents; time ./mdf NEW_MAP result --this:test is  the:6799 full map:edout 99:contents;
+*/
 
 
 
@@ -670,15 +680,15 @@ _token+=search_string[_iterator];
 }
 */
 
-// time ./mdb VERSION_CONTROL datafile 
+// time ./mdf VERSION_CONTROL datafile 
 // time grep  VERSION_CONTROL datafile
 
 // time grep VERSION_CONTROL datafile | tr ' ' '\n' | grep VERSION | tail -1 | tr ':' ' ' | awk {'print $2'}
-// time ./mdb VERSION_CONTROL datafile VERSION
+// time ./mdf VERSION_CONTROL datafile VERSION
 
 
 
-// clang++-7 -pthread -std=c++17 -o mdb mdb.cpp
+// clang++-7 -pthread -std=c++17 -o mdf mdf.cpp
 
 /*
 string alt_find(string target_token,string search_string, string key){
@@ -720,5 +730,14 @@ iterator++;
 } // while(iterator < search_string.length()){
 return "-2";
 } // string alt_find(string target_token,string search_string, string key){
+
+*/
+
+// generic_lambda
+// http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0428r2.pdf
+/*
+auto f = [](auto&& ...args) {
+return foo(std::forward<decltype(args)>(args)...);
+};
 
 */
